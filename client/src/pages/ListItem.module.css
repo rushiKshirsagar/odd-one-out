@@ -1,0 +1,133 @@
+.wrap {
+  padding: 6rem 2rem 4rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.form {
+  background: var(--bg-elevated);
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  box-shadow: 0 2px 12px rgba(13, 148, 136, 0.06);
+}
+
+.form label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 1.25rem 0 0.4rem;
+}
+
+.form label:first-of-type {
+  margin-top: 0;
+}
+
+.required {
+  color: #b91c1c;
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+}
+
+.form select {
+  cursor: pointer;
+  background: var(--bg-elevated);
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+}
+
+.checkbox {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem !important;
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: auto;
+  margin-top: 0.2rem;
+}
+
+.submit {
+  margin-top: 1.75rem;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.imageOption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.imageOption input[type="file"] {
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+}
+
+.imageHint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.fileName {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin: 0.35rem 0 0;
+}
+
+.error {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
