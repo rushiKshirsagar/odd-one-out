@@ -4,7 +4,7 @@ import { singleImage } from '../upload.js'
 
 const router = Router()
 
-const itemColumns = 'id, title, description, price_cents, image_url, category, location, created_at'
+const itemColumns = 'id, title, description, price_cents, image_url, category, location, phone, created_at'
 const soldSubquery = `EXISTS (SELECT 1 FROM orders o WHERE o.item_id = items.id AND o.status IN ('paid', 'cash_pending'))`
 
 router.get('/', (req, res) => {
@@ -39,34 +39,40 @@ router.get('/:id', (req, res) => {
 
 // JSON body (no file)
 function createFromJson(req, res) {
-  const { title, description, price_cents, image_url, category, location } = req.body
+  const { title, description, price_cents, image_url, category, location, phone } = req.body
   if (!title || typeof price_cents !== 'number' || price_cents < 1) {
     return res.status(400).json({ error: 'Invalid title or price' })
   }
+  const loc = location && typeof location === 'string' ? location.trim() : ''
+  const ph = phone && typeof phone === 'string' ? phone.trim() : ''
+  if (!loc) return res.status(400).json({ error: 'Area (pickup location) is required' })
+  if (!ph) return res.status(400).json({ error: 'Phone number is required' })
   const cat = category && typeof category === 'string' ? category.trim().toLowerCase() || 'other' : 'other'
-  const loc = location && typeof location === 'string' ? location.trim() || null : null
   const result = db.prepare(`
-    INSERT INTO items (title, description, price_cents, image_url, category, location)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run(title, description || null, price_cents, image_url || null, cat, loc)
+    INSERT INTO items (title, description, price_cents, image_url, category, location, phone)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(title, description || null, price_cents, image_url || null, cat, loc, ph)
   const item = db.prepare('SELECT * FROM items WHERE id = ?').get(result.lastInsertRowid)
   res.status(201).json(item)
 }
 
 // Multipart (optional file upload)
 function createFromMultipart(req, res) {
-  const { title, description, price_cents, category, image_url: urlField, location } = req.body
+  const { title, description, price_cents, category, image_url: urlField, location, phone } = req.body
   const price = parseInt(price_cents, 10)
   if (!title || !price_cents || isNaN(price) || price < 1) {
     return res.status(400).json({ error: 'Invalid title or price' })
   }
+  const loc = location && typeof location === 'string' ? location.trim() : ''
+  const ph = phone && typeof phone === 'string' ? phone.trim() : ''
+  if (!loc) return res.status(400).json({ error: 'Area (pickup location) is required' })
+  if (!ph) return res.status(400).json({ error: 'Phone number is required' })
   const cat = category && typeof category === 'string' ? category.trim().toLowerCase() || 'other' : 'other'
   const image_url = req.file ? `/uploads/${req.file.filename}` : (urlField && urlField.trim()) || null
-  const loc = location && typeof location === 'string' ? location.trim() || null : null
   const result = db.prepare(`
-    INSERT INTO items (title, description, price_cents, image_url, category, location)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run(title.trim(), (description && description.trim()) || null, price, image_url, cat, loc)
+    INSERT INTO items (title, description, price_cents, image_url, category, location, phone)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(title.trim(), (description && description.trim()) || null, price, image_url, cat, loc, ph)
   const item = db.prepare('SELECT * FROM items WHERE id = ?').get(result.lastInsertRowid)
   res.status(201).json(item)
 }

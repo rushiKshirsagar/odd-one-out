@@ -3,6 +3,7 @@
 }
 
 .hero {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -10,7 +11,6 @@
   align-items: center;
   text-align: center;
   padding: 6rem 2rem 4rem;
-  background: linear-gradient(180deg, var(--bg) 0%, rgba(13, 148, 136, 0.06) 100%);
 }
 
 .tagline {
@@ -20,6 +20,20 @@
   letter-spacing: 0.15em;
   color: var(--accent);
   margin: 0 0 1rem;
+}
+
+.oneLiner {
+  font-style: italic;
+  font-size: 1rem;
+  max-width: 32ch;
+  margin: 0 0 1.5rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(99, 102, 241, 0.12) 50%, rgba(251, 146, 60, 0.1) 100%);
+  border-left: 4px solid var(--accent);
+  color: var(--text);
+  line-height: 1.5;
+  box-shadow: var(--shadow);
 }
 
 .title {
@@ -51,6 +65,25 @@
 .exampleIcon {
   color: var(--accent);
   opacity: 0.75;
+  animation: iconFloat 2.5s ease-in-out infinite;
+}
+
+.exampleIcon:nth-child(1) { animation-delay: 0s; }
+.exampleIcon:nth-child(2) { animation-delay: 0.2s; }
+.exampleIcon:nth-child(3) { animation-delay: 0.4s; }
+.exampleIcon:nth-child(4) { animation-delay: 0.6s; }
+.exampleIcon:nth-child(5) { animation-delay: 0.8s; }
+.exampleIcon:nth-child(6) { animation-delay: 0.3s; }
+.exampleIcon:nth-child(7) { animation-delay: 0.5s; }
+.exampleIcon:nth-child(8) { animation-delay: 0.7s; }
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .cta {
@@ -79,7 +112,7 @@
 .primary:hover {
   background: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45);
 }
 
 .secondary {
@@ -120,10 +153,13 @@
   padding: 2rem;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
   position: relative;
   box-shadow: var(--shadow);
 }
+
+.step:nth-child(1) { border-left: 4px solid #0d9488; }
+.step:nth-child(2) { border-left: 4px solid #6366f1; }
+.step:nth-child(3) { border-left: 4px solid #ea580c; }
 
 .stepNum {
   position: absolute;
@@ -132,10 +168,12 @@
   font-family: var(--font-mono);
   font-size: 2rem;
   font-weight: 700;
-  color: var(--accent);
-  opacity: 0.4;
   line-height: 1;
 }
+
+.step:nth-child(1) .stepNum { color: #0d9488; opacity: 0.6; }
+.step:nth-child(2) .stepNum { color: #6366f1; opacity: 0.6; }
+.step:nth-child(3) .stepNum { color: #ea580c; opacity: 0.6; }
 
 .step h3 {
   font-size: 1.25rem;
@@ -153,7 +191,7 @@
   padding: 3rem 2rem;
   text-align: center;
   border-top: 1px solid var(--border);
-  background: var(--accent-soft);
+  background: linear-gradient(180deg, var(--accent-soft) 0%, rgba(99, 102, 241, 0.08) 100%);
 }
 
 .footer p {

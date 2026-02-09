@@ -12,7 +12,7 @@ export default function About() {
         <h2>Why Odd One Out?</h2>
         <p>
           Dryers eat socks. Gloves get lost. Earbuds vanish. Shoes break in pairs. Chopsticks go solo. Instead of binning the survivor, list it here.
-          Socks, shoes, gloves, earbuds, earrings, contact lenses, chopsticks, cufflinks, pedals, wheels, controllers, slippers, arm warmers, headphones, batteries—someone out there lost the other one, or just likes the mismatch. No judgement.
+          Socks, shoes, gloves, earbuds, earrings, contact lenses, chopsticks, cufflinks, pedals, wheels, controllers, slippers, arm warmers, headphones, batteries? someone out there lost the other one, or just likes the mismatch. No judgement.
         </p>
       </section>
 
@@ -21,7 +21,7 @@ export default function About() {
         <ul>
           <li>One item per listing. Pick a category—one half only.</li>
           <li>Clean before listing. Wash socks, wipe earbuds, we’re not monsters.</li>
-          <li>Be honest about condition. Nobody likes a surprise hole (or dead bud).</li>
+          <li>Be honest about condition. Nobody likes a surprise hole.</li>
           <li>Pay with card (Stripe) or cash on pickup. Your call.</li>
         </ul>
       </section>
@@ -30,13 +30,13 @@ export default function About() {
         <h2>Contact</h2>
         <p>
           Questions? Complaints? Found your long-lost pair? Drop us a line at{' '}
-          <a href="mailto:hello@oddoneout.example">hello@oddoneout.example</a>.
+          <a href="mailto:wabameisterr@gmail.com">wabameisterr@gmail.com</a>.
           We’ll get back to you. (Eventually.)
         </p>
       </section>
 
       <p className={styles.footer}>
-        Odd One Out — Socks, shoes, gloves, earbuds, earrings, chopsticks & more. Pairs are overrated.
+        Odd One Out: Pairs are overrated. 
       </p>
     </div>
   )

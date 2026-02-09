@@ -48,4 +48,8 @@ try {
   db.exec(`ALTER TABLE items ADD COLUMN location TEXT`)
 } catch (_) {}
 
+try {
+  db.exec(`ALTER TABLE items ADD COLUMN phone TEXT`)
+} catch (_) {}
+
 export default db

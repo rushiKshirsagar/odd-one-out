@@ -1,10 +1,30 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import CategoryIcon from '../components/CategoryIcon'
 import styles from './Home.module.css'
 
 const HERO_CATEGORIES = ['sock', 'shoe', 'glove', 'earbud', 'earring', 'chopstick', 'slipper', 'controller']
 
+const ONE_LINERS = [
+  "Yes, we're a whole website for your lonely sock. No, we're not judging.",
+  "We're the Tinder for things that lost their other half.",
+  "We built a marketplace for single socks. Our parents are very proud.",
+  "Your drawer called. It said to list the odd one out.",
+  "Pairs are overrated. So are matching socks. We're here for both.",
+  "This site exists because someone had to. That someone was us.",
+  "Your lone chopstick has been waiting. Give it a second life.",
+  "We don't ask why you have one slipper. We just help you move on.",
+  "Somewhere out there, your sock's soulmate is listed. Probably.",
+]
+
 export default function Home() {
+  const [oneLiner, setOneLiner] = useState(ONE_LINERS[0])
+
+  useEffect(() => {
+    const i = Math.floor(Math.random() * ONE_LINERS.length)
+    setOneLiner(ONE_LINERS[i])
+  }, [])
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -14,7 +34,10 @@ export default function Home() {
           We’ve got the one that stayed.
         </h1>
         <p className={styles.subtitle}>
-          Socks, shoes, gloves, earbuds, earrings, chopsticks, cufflinks, slippers & more. List your lone half. Buy someone else’s. No judgement.
+          Socks, shoes, gloves, earrings, chopsticks, cufflinks, slippers & more. List your lone half. Buy someone else’s. No judgement.
+        </p>
+        <p className={styles.oneLiner} role="complementary">
+          {oneLiner}
         </p>
         <div className={styles.examples} aria-hidden>
           {HERO_CATEGORIES.map((cat) => (
@@ -53,7 +76,7 @@ export default function Home() {
       </section>
 
       <footer className={styles.footer}>
-        <p>Odd One Out — Socks, shoes, gloves, earbuds, earrings, chopsticks & more. Pairs are overrated.</p>
+        <p>Odd One Out: Pairs are overrated.</p>
         <Link to="/about">About us</Link>
       </footer>
     </div>

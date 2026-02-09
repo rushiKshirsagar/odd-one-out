@@ -1,6 +1,6 @@
 .wrap {
   padding: 6rem 2rem 4rem;
-  max-width: 560px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -29,6 +29,22 @@
   box-shadow: 0 2px 12px rgba(13, 148, 136, 0.06);
 }
 
+.formColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+}
+
+.formCol {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .formColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
 .form label {
   display: block;
   font-size: 0.9rem;
@@ -36,7 +52,7 @@
   margin: 1.25rem 0 0.4rem;
 }
 
-.form label:first-of-type {
+.formCol label:first-of-type {
   margin-top: 0;
 }
 

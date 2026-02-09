@@ -113,9 +113,12 @@ export default function Checkout() {
       {paymentMethod === 'cash' ? (
         <div className={styles.cashSection}>
           {item.location && (
-            <p className={styles.pickupLocation}>Pickup location: {item.location}</p>
+            <p className={styles.pickupLocation}>Pickup area: {item.location}</p>
           )}
-          <p>You’ll pay when you pick up the item. The seller will contact you to arrange pickup.</p>
+          {item.phone && (
+            <p className={styles.pickupLocation}>Seller phone: {item.phone}</p>
+          )}
+          <p>You’ll pay when you pick up the item. Use the details above to arrange pickup.</p>
           <button
             type="button"
             className={styles.submit}

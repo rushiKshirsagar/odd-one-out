@@ -12,6 +12,7 @@ export default function ListItem() {
   const [category, setCategory] = useState('other')
   const [priceCents, setPriceCents] = useState('')
   const [location, setLocation] = useState('')
+  const [phone, setPhone] = useState('')
   const [imageFile, setImageFile] = useState(null)
   const [washed, setWashed] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -33,6 +34,14 @@ export default function ListItem() {
       setError('Give your item a title.')
       return
     }
+    if (!location.trim()) {
+      setError('Please enter your area (pickup location).')
+      return
+    }
+    if (!phone.trim()) {
+      setError('Please enter your phone number.')
+      return
+    }
     setSubmitting(true)
     try {
       let res
@@ -42,7 +51,8 @@ export default function ListItem() {
         form.append('description', description.trim())
         form.append('category', category || 'other')
         form.append('price_cents', String(cents))
-        if (location.trim()) form.append('location', location.trim())
+        form.append('location', location.trim())
+        form.append('phone', phone.trim())
         form.append('image', imageFile)
         res = await fetch(`${API}/items`, { method: 'POST', body: form })
       } else {
@@ -55,7 +65,8 @@ export default function ListItem() {
             category: category || 'other',
             price_cents: cents,
             image_url: null,
-            location: location.trim() || null,
+            location: location.trim(),
+            phone: phone.trim(),
           }),
         })
       }
@@ -81,10 +92,12 @@ export default function ListItem() {
 
       <form onSubmit={handleSubmit} className={styles.form}>
         {error && <p className={styles.error}>{error}</p>}
-        <label>
-          Category <span className={styles.required}>*</span>
-        </label>
-        <select
+        <div className={styles.formColumns}>
+          <div className={styles.formCol}>
+            <label>
+              Category <span className={styles.required}>*</span>
+            </label>
+            <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
@@ -93,52 +106,69 @@ export default function ListItem() {
             <option key={c.value} value={c.value}>{c.label}</option>
           ))}
         </select>
-        <label>
-          Title <span className={styles.required}>*</span>
-        </label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g. Blue striped sock (left), black AirPod, red winter glove"
-          required
-        />
-        <label>Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Condition, size, colour, backstory..."
-          rows={4}
-        />
-        <label>
-          Price (USD) <span className={styles.required}>*</span>
-        </label>
-        <input
-          type="number"
-          step="0.01"
-          min="0"
-          value={priceCents}
-          onChange={(e) => setPriceCents(e.target.value)}
-          placeholder="0.00"
-          required
-        />
-        <label>Pickup location (optional, for cash on pickup)</label>
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="e.g. Brooklyn, NY, USA"
-        />
-        <label>Image (optional)</label>
-        <div className={styles.imageOption}>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/gif,image/webp"
-            onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-          />
-          <span className={styles.imageHint}>Max 2MB. JPEG, PNG, GIF, WebP.</span>
+            <label>
+              Title <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Blue striped sock (left), red winter glove"
+              required
+            />
+            <label>Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Condition, size, colour, backstory..."
+              rows={4}
+            />
+            <label>Image (optional)</label>
+            <div className={styles.imageOption}>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+              />
+              <span className={styles.imageHint}>Max 2MB. JPEG, PNG, GIF, WebP.</span>
+            </div>
+            {imageFile && <p className={styles.fileName}>{imageFile.name}</p>}
+          </div>
+          <div className={styles.formCol}>
+            <label>
+              Price (USD) <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              value={priceCents}
+              onChange={(e) => setPriceCents(e.target.value)}
+              placeholder="0.00"
+              required
+            />
+            <label>
+              Area <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="We don't care where you live—the buyer would."
+              required
+            />
+            <label>
+              Phone number <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="We won't text you for fun—the buyer might."
+              required
+            />
+          </div>
         </div>
-        {imageFile && <p className={styles.fileName}>{imageFile.name}</p>}
         <label className={styles.checkbox}>
           <input
             type="checkbox"
