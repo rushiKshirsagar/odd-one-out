@@ -4,13 +4,12 @@ A quirky marketplace where you can only list items that are 1 out of a pair. Los
 
 ## Features
 
-- 🧦 List single items (one sock per listing)
-- 🔍 Browse available items
-- 💳 Stripe payment integration
-- 💵 Cash on pickup option
-- 📱 Clean, responsive design
-- 🎨 Dynamic header that changes on scroll
-- 😄 Subtle humor throughout
+- List single items (one sock per listing)
+- Browse available items
+- Stripe payment integration
+- Cash on pickup option
+- Responsive layout
+- Dynamic header that changes on scroll
 
 ## Tech Stack
 
@@ -89,9 +88,6 @@ The server will serve the built React app and handle API routes.
 - SQLite database is created automatically in `server/data/`
 - Uploads directory `server/uploads/` is created on first upload
 - Stripe keys are required for payment processing (use test keys for development)
-- The "washed before listing" checkbox is enforced (with a wink)
+- The "washed before listing" checkbox is required on the form
 - **Seed data**: If the items table is empty, the server seeds 3 dummy products on startup. To re-seed, delete `server/data/marketplace.db` and restart, or run `cd server && npm run seed` (seed script only runs when the table is empty)
 
----
-
-Odd One Out — Where lone socks find new feet. Pairs are overrated.

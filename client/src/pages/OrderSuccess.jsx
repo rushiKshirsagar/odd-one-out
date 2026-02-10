@@ -10,6 +10,7 @@ export default function OrderSuccess() {
   const orderId = params.get('order')
   const paymentIntent = params.get('payment_intent')
   const [completedOrderId, setCompletedOrderId] = useState(orderId)
+  const [orderDetails, setOrderDetails] = useState(null)
 
   useEffect(() => {
     if (!paymentIntent) return
@@ -23,6 +24,17 @@ export default function OrderSuccess() {
       .catch(() => {})
   }, [paymentIntent])
 
+  useEffect(() => {
+    const id = completedOrderId || orderId
+    if (!id) return
+    fetch(`${API}/orders/${id}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then(setOrderDetails)
+      .catch(() => {})
+  }, [completedOrderId, orderId])
+
+  const hasPickupInfo = orderDetails?.payment_method === 'cash' && (orderDetails?.item?.phone || orderDetails?.item?.location)
+
   return (
     <div className={styles.wrap}>
       <div className={styles.card}>
@@ -30,6 +42,13 @@ export default function OrderSuccess() {
         <h1>You did it.</h1>
         <p>Your lone item is on its way to a new home. (Or you’re paying cash when you pick it up. Either way—nice.)</p>
         {(completedOrderId || orderId) && <p className={styles.orderId}>Order #{completedOrderId || orderId}</p>}
+        {hasPickupInfo && (
+          <div className={styles.pickupInfo}>
+            {orderDetails.item.phone && <p className={styles.pickupLine}><strong>Lister&apos;s phone:</strong> {orderDetails.item.phone}</p>}
+            {orderDetails.item.location && <p className={styles.pickupLine}><strong>Pickup area:</strong> {orderDetails.item.location}</p>}
+            <p className={styles.note}>You won&apos;t get an email about this—note it down now.</p>
+          </div>
+        )}
         <Link to="/browse" className={styles.cta}>Browse more items</Link>
       </div>
     </div>

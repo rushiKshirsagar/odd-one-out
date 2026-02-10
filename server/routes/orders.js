@@ -5,6 +5,15 @@ import db from '../db.js'
 const router = Router()
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null
 
+router.get('/:id', (req, res) => {
+  const id = req.params.id
+  const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id)
+  if (!order) return res.status(404).json({ error: 'Order not found' })
+  const item = db.prepare('SELECT id, title, phone, location FROM items WHERE id = ?').get(order.item_id)
+  if (!item) return res.status(404).json({ error: 'Item not found' })
+  res.json({ ...order, item: { title: item.title, phone: item.phone, location: item.location } })
+})
+
 router.post('/', (req, res) => {
   const { item_id, payment_method } = req.body
   if (!item_id || !payment_method) {
